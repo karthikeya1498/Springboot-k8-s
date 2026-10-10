@@ -1,8 +1,12 @@
 pipeline {
     agent any
 
-    stages {
+    environment {
+        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21.0.12.1'
+        PATH = "${JAVA_HOME}\\bin;${env.PATH}"
+    }
 
+    stages {
         stage('Checkout Code') {
             steps {
                 checkout scm
@@ -12,7 +16,9 @@ pipeline {
 
         stage('Check Java and Docker') {
             steps {
+                bat 'echo JAVA_HOME=%JAVA_HOME%'
                 bat 'java -version'
+                bat 'javac -version'
                 bat 'docker --version'
             }
         }
